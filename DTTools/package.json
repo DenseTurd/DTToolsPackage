@@ -1,0 +1,6 @@
+{
+    "name": "com.dt.tools",
+    "version": "0.0.1",
+    "displayName": "DT Tools",
+    "description": "DenseTurd's debugger and default directory setup for unity"
+}
