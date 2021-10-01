@@ -13,13 +13,13 @@ public class BasicConsole : MonoBehaviour,IConsole
     float scrollTimer;
 
     [HideInInspector] public IFormatter formatter;
-    [HideInInspector] public GenericObjectPool<Text> textPrefabPool;
+    [HideInInspector] public DTObjectPool<Text> textPrefabPool;
     public void Init()
     {
         formatter = GetComponent<IFormatter>();
         formatter.Init();
 
-        textPrefabPool = GetComponent<GenericObjectPool<Text>>();
+        textPrefabPool = GetComponent<DTObjectPool<Text>>();
 
         Hide();
         //Debug.Log("DTBug console initialised");
@@ -40,7 +40,11 @@ public class BasicConsole : MonoBehaviour,IConsole
     {
         if (content.childCount > 100) {
             for (int i = 0; i < 10; i++)
-                textPrefabPool.ReturnToPool(content.GetChild(i).GetComponent<Text>());
+            {
+                GameObject go = content.GetChild(i).gameObject;
+                go.transform.SetParent(scrollRect.transform);
+                textPrefabPool.ReturnToPool(go.GetComponent<Text>());
+            }
         }
     }
 
